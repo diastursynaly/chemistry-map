@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ҰБТ Химия картасы</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f6f7fb;--card:#fff;--tx:#1c2033;--mu:#7a8099;--ac:#2fb59a;--ac2:#7b6cf0;--bd:#e3e6f0;--lk:#eef0f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161f;--card:#1e2130;--tx:#eceef7;--mu:#98a0bb;--bd:#2c3045;--lk:#191c29}}
+:root[data-theme="dark"]{--bg:#14161f;--card:#1e2130;--tx:#eceef7;--mu:#98a0bb;--bd:#2c3045;--lk:#191c29}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:20px 14px 60px}
+h1{font-size:22px;margin:0 0 2px}
+.sub{color:var(--mu);font-size:13px;margin-bottom:14px}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .3s}
+.pt{display:flex;justify-content:space-between;font-size:13px;color:var(--mu);margin:6px 0 14px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{flex:1;min-width:120px;padding:9px 10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+.tabs button.on{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+.tabs small{display:block;font-weight:400;opacity:.85}
+.tree{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:8px 10px}
+ul{list-style:none;margin:0;padding:0}
+ul ul{margin-left:16px;padding-left:12px;border-left:2px solid var(--bd)}
+.r{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:9px;cursor:pointer;user-select:none}
+.r:hover{background:var(--lk)}
+.cb{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--ac);display:grid;place-items:center;color:#fff;font-size:14px}
+.done>.r .cb{background:var(--ac)}
+.done>.r .t{color:var(--mu);text-decoration:line-through;text-decoration-color:var(--ac)}
+.lock>.r{cursor:not-allowed;opacity:.5}
+.lock>.r:hover{background:none}
+.lock>.r .cb{border-color:var(--mu);border-style:dashed;font-size:11px}
+.top>.r .t{font-weight:600}
+.hint{font-size:12px;color:var(--mu);margin-left:auto}
+.ft{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--mu);font-size:12px}
+.ft button{border:1px solid var(--bd);background:var(--card);color:var(--mu);border-radius:8px;padding:6px 10px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>🧪 ҰБТ Химия картасы</h1>
+<div class="sub">Тақырыпты үйренгенде белгіле — келесі тарау ашылады. Тізбекпен жүр.</div>
+<div class="bar"><i id="pb"></i></div>
+<div class="pt"><span id="pl">0 / 0</span><span id="pp">0%</span></div>
+<div class="tabs" id="tabs"></div>
+<div class="tree" id="tree"></div>
+<div class="ft"><span>Ізгі ниетпен Dias Sempai</span><button id="rs">Қайта бастау</button></div>
+</div>
+<script>
+const RAW={
+gen:`Таза зат және қоспа
+Физикалық және химиялық құбылыстар
+Агрегаттық күй
+Атом/молекула ұғымдары
+-Салыстырмалы атомдық масса
+-Салыстырмалы молекулалық масса
+-Массалық үлес
+-Орташа салыстырмалы атомдық масса
+Атом құрамы
+-Изотоп, изотон, изобара
+-Радиоактивтілік
+Валенттілік
+-Оксид, негіз, қышқыл, тұздардың формуласын құрастыру
+Зат мөлшері есептері
+-Зат тығыздығы
+-Идеал газ есептері (Менделеев–Клапейрон)
+-4 реакция тип теңдеулерін жазу
+Реакция теңдеулері арқылы есептеулер
+-Реагент бірі аз арқылы есептеулер
+-Термохимиялық теңдеу арқылы есептеулер
+-Шығым есептері
+-Қоспа есептері
+--Газдар қоспасы
+--Бірөлшемді қоспа есептері
+--Реагент құрамындағы қоспа есебі
+--Екіөлшемді (параллель) қоспа есебі
+-Белгісіз металды анықтау есептері
+-Жанған өнім мәндері арқылы белгісіз зат (органика)
+-Пластинка есептері
+-Олеум
+Ерітінді есептері
+-Молярлық концентрация есептері
+-Тығыздықпен ерітінді есептері
+Қосылыстар сыныптары
+-Оксидтер
+--Оксидтерді жіктеу
+--Оксидтердің реакциялары мен қолданылуы
+--Құрылысын сала алу
+-Негіздер
+--Негіздердің жіктелуі
+--Негіздердің реакциялары мен қолданылуы
+-Қышқылдар
+--Қышқылдардың жіктелуі
+--Қышқылдардың реакциялары мен қолданылуы
+-Тұздар
+--Тұздардың жіктелуі
+--Тұздардың реакциялары мен қолданылуы
+--Қышқылдық және негіздік тұздардың түзілуі
+--Кристаллогидраттар
+-Индикаторлар
+-Генетикалық байланыс
+Периодтық жүйе
+-Периодтық кесте тарихы
+-Периодтық жүйе құрылымы
+-Периодтық жүйе бойынша қасиеттердің өзгеруі
+Атом құрылысы және байланыс
+-Квант сандары
+-Электрондық конфигурация
+-Химиялық байланыстар
+-Кристалдық торлар
+-Гибридтену
+-Гиллеспи теориясы
+Тотығу-тотықсыздану
+-Тотығу дәрежесі
+-ТТР (электронды баланс)
+-ТТР (электронды-ионды баланс)
+-Электролиз
+-Гальваникалық элемент
+-Аккумулятордағы реакциялар
+Ерітінділер теориясы
+-Электролиттік диссоциация
+-Ион алмасу реакциясы
+-Қышқыл-негіздік теория
+-Сутектік көрсеткіш (pH)
+-Титрлеу
+-Буферлі ерітінділер
+-Тұздар гидролизі
+-Сапалық реакциялар
+Химиялық кинетика және тепе-теңдік
+-Химиялық реакция жылдамдығы
+-Химиялық тепе-теңдік
+-Тепе-теңдік константасы
+Металдар және кешендер
+-Металдардың қасиеттері
+-Метал құймалары
+-Кешенді қосылыстар`,
+inorg:`IA топ элементтері
+IIA топ элементтері
+IIIA (Al) топ элементтері
+IVA топ (C, Si) элементтері
+VA топ (Фосфор, Азот) элементтері
+VI топ (S, O) элементтері
+VIIA топ (Cl) элементтері
+Қосымша топша элементтері`,
+org:`Көмірсутектер
+-Алкандар
+-Циклоалкандар
+-Алкендер
+-Алкиндер
+-Алкадиендер
+-Арендер
+Көмірсутек туындылары
+-Галоген туындылар (C+H+Hal.)
+-Оттекті туындылар (C+H+O)
+--Спирттер
+--Фенолдар
+--Альдегидтер
+--Кетондар
+--Эфирлер
+--Майлар
+--Карбон қышқылдары
+-Азотты қосылыстар (C+H+N)
+--Аминдер
+--Нитроқосылыстар
+-Гетерофункционалды қосылыстар
+--Көмірсулар
+--Аминқышқылдары
+--Гетероциклдер
+Полимерлер (талшықтар)
+-Табиғи (биополимерлер)
+--Өсімдіктекті
+--Жануартекті
+-Химиялық
+--Жасанды
+--Синтетикалық`};
+const TABS=[["gen","Жалпы химия"],["inorg","Бейорганикалық"],["org","Органикалық"]];
+const KEY="ent-chem-progress-v1";
+let S={},cur="gen",roots={},all={};
+try{S=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){S={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function parse(k){
+  const root={kids:[],id:k},stack=[root];
+  RAW[k].split("\n").forEach((ln,i)=>{
+    const d=(ln.match(/^-*/)[0]).length,name=ln.slice(d).trim();
+    const p=stack[d];
+    const n={name,parent:p,kids:[],tab:k,idx:p.kids.length,id:k+"."+i};
+    p.kids.push(n);n.sibs=p.kids;stack[d+1]=n;stack.length=d+2;all[n.id]=n;
+  });
+  return root;
+}
+TABS.forEach(([k])=>roots[k]=parse(k));
+const isRoot=n=>!n.parent.parent;
+function avail(n){
+  const p=n.parent;
+  if(p.parent&&!S[p.id])return false;
+  return n.idx===0||!!S[n.sibs[n.idx-1].id];
+}
+function clr(n){delete S[n.id];n.kids.forEach(clr)}
+function toggle(n){
+  if(!avail(n))return;
+  if(S[n.id]){for(let i=n.idx;i<n.sibs.length;i++)clr(n.sibs[i])}
+  else S[n.id]=1;
+  save();draw();
+}
+function count(k){
+  const ids=Object.values(all).filter(n=>n.tab===k);
+  return [ids.filter(n=>S[n.id]&&avail(n)).length,ids.length];
+}
+function li(n){
+  const el=document.createElement("li"),ok=avail(n),dn=ok&&S[n.id];
+  el.className=(dn?"done ":"")+(ok?"":"lock ")+(isRoot(n)?"top":"");
+  const r=document.createElement("div");r.className="r";
+  r.innerHTML=`<span class="cb">${dn?"✓":ok?"":"🔒"}</span><span class="t"></span>`;
+  r.querySelector(".t").textContent=n.name;
+  if(dn&&n.kids.length){
+    const dk=n.kids.filter(c=>S[c.id]&&avail(c)).length;
+    r.insertAdjacentHTML("beforeend",`<span class="hint">${dk}/${n.kids.length}</span>`);
+  }
+  r.onclick=()=>toggle(n);
+  el.appendChild(r);
+  if(dn&&n.kids.length){const u=document.createElement("ul");n.kids.forEach(c=>u.appendChild(li(c)));el.appendChild(u)}
+  return el;
+}
+function draw(){
+  const tabs=document.getElementById("tabs");tabs.innerHTML="";
+  let td=0,tt=0;
+  TABS.forEach(([k,t])=>{
+    const [d,tot]=count(k);td+=d;tt+=tot;
+    const b=document.createElement("button");b.className=k===cur?"on":"";
+    b.innerHTML=`${t}<small>${d}/${tot}</small>`;
+    b.onclick=()=>{cur=k;draw()};tabs.appendChild(b);
+  });
+  const u=document.createElement("ul");
+  roots[cur].kids.forEach(n=>u.appendChild(li(n)));
+  const tr=document.getElementById("tree");tr.innerHTML="";tr.appendChild(u);
+  const pc=tt?Math.round(td/tt*100):0;
+  document.getElementById("pb").style.width=pc+"%";
+  document.getElementById("pl").textContent=td+" / "+tt+" тақырып";
+  document.getElementById("pp").textContent=pc+"%";
+}
+document.getElementById("rs").onclick=()=>{if(confirm("Барлық прогресс өшіріледі. Жалғастыру?")){S={};save();draw()}};
+draw();
+</script>
+</body>
+</html>
